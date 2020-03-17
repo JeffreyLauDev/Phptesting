@@ -1,5 +1,6 @@
 ##PHP Developer Test by Jeffrey
 
+## Installation & Run
 
 ### Step 1: Database Migration
 Please follow the following command steps to migrate databse and import seed data :
@@ -24,3 +25,14 @@ Please follow the following command steps to migrate databse and import seed dat
 ### Step 3: Have Fun!  
 Visit http://localhost:8080  
 
+
+
+
+## Technical knowledge
+The belowing list shows the technical skills that are needed for this project
+- PHP (Laravel)
+- Vue.js/Javascript
+- HTML
+- GIT
+- Bootstrap
+- Axios (AJAX)

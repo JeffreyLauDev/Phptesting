@@ -9,6 +9,8 @@
     <b-form-input v-model="priceFrom" type="number" placeholder="price From" @input="getRooms"></b-form-input>
     <b-form-input v-model="priceTo" type="number" placeholder="price To" @input="getRooms"></b-form-input>
     <b-table striped hover :items="rooms"></b-table>
+    <p v-if="rooms.length === 0 && loading !== true">No results</p>
+    <b-spinner label="Loading..." v-if="loading === true"></b-spinner>
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      loading: true,
       name: "",
       bedrooms: "",
       bathrooms: "",
@@ -32,6 +35,7 @@ export default {
 
   methods: {
     getRooms() {
+      this.loading = true;
       let params = {};
       //Manage search params
       if (this.name !== "") {
@@ -62,6 +66,7 @@ export default {
         })
         .then(response => {
           this.rooms = [...response.data];
+          this.loading = false;
         })
         .catch(err => {
           // Manage the state of the application if the request

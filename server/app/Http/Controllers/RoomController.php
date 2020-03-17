@@ -13,7 +13,8 @@ class RoomController extends Controller
 
         $room = $room->newQuery();
         if ($request->has('name')) {
-            $room->where('name', $request->input('name'));
+            $name = $request->input('name');
+            $room->where('name','LIKE' ,'%'.$name.'%');
         }
      
         if ($request->has('bedrooms')) {
