@@ -7,12 +7,31 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    protected $allowedFilteringParameters = ['name', 'price','bedrooms','bathrooms','storeys','garages'];
-    public function index(Request $request)
+    protected $allowedFilteringParameters = ['name', 'priceFrom','priceTo','bedrooms','bathrooms','storeys','garages'];
+    public function index(Request $request, Room $room)
     {
-        
-        echo $request;
-        return Room::all();
+
+        $room = $room->newQuery();
+        if ($request->has('name')) {
+            $room->where('name', $request->input('name'));
+        }
+     
+        if ($request->has('bedrooms')) {
+            $room->where('bedrooms', $request->input('bedrooms'));
+        }
+        if ($request->has('bathrooms')) {
+            $room->where('bathrooms', $request->input('bathrooms'));
+        }
+        if ($request->has('storeys')) {
+            $room->where('storeys', $request->input('storeys'));
+        }
+        if ($request->has('garages')) {
+            $room->where('garages', $request->input('garages'));
+        }
+        if ($request->has('priceFrom') && $request->has('priceTo')) {
+             $room->whereBetween('price', array($request->input('priceFrom'),$request->input('priceTo')));           
+        }    
+        return $room->get();
 
     }
 

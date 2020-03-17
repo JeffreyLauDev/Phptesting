@@ -6,8 +6,8 @@
     <b-form-input v-model="bathrooms" type="number" placeholder="bathrooms" @input="getRooms"></b-form-input>
     <b-form-input v-model="storeys" type="number" placeholder="storeys" @input="getRooms"></b-form-input>
     <b-form-input v-model="garages" type="number" placeholder="garages" @input="getRooms"></b-form-input>
-    <b-form-input v-model="price[0]" type="number" placeholder="price X" @input="getRooms"></b-form-input>
-    <b-form-input v-model="price[1]" type="number" placeholder="price Y" @input="getRooms"></b-form-input>
+    <b-form-input v-model="priceFrom" type="number" placeholder="price From" @input="getRooms"></b-form-input>
+    <b-form-input v-model="priceTo" type="number" placeholder="price To" @input="getRooms"></b-form-input>
     <b-table striped hover :items="rooms"></b-table>
   </div>
 </template>
@@ -23,7 +23,8 @@ export default {
       bathrooms: "",
       storeys: "",
       garages: "",
-      price: [],
+      priceFrom: "",
+      priceTo: "",
       rooms: [],
       query: ""
     };
@@ -31,21 +32,35 @@ export default {
 
   methods: {
     getRooms() {
-      let query = "?q=" + this.name !== "" ? name : "";
-      console.log("room", this.name);
+      let params = {};
+      //Manage search params
+      if (this.name !== "") {
+        params = { ...params, name: this.name };
+      }
+      if (this.bedrooms !== "") {
+        params = { ...params, bedrooms: this.bedrooms };
+      }
+      if (this.bathrooms !== "") {
+        params = { ...params, bedrooms: this.bathrooms };
+      }
+      if (this.storeys !== "") {
+        params = { ...params, storeys: this.storeys };
+      }
+      if (this.garages !== "") {
+        params = { ...params, garages: this.garages };
+      }
+      if (this.priceFrom !== "") {
+        params = { ...params, priceFrom: this.priceFrom };
+      }
+      if (this.priceTo !== "") {
+        params = { ...params, priceTo: this.priceTo };
+      }
+
       axios
         .get("http://localhost:8000/api/rooms", {
-          params: {
-            name: this.name,
-            bedrooms: this.bedrooms,
-            bathrooms: this.bathrooms,
-            storeys: this.storeys,
-            garages: this.garages,
-            price: this.price
-          }
+          params
         })
         .then(response => {
-          console.log("query", query);
           this.rooms = [...response.data];
         })
         .catch(err => {
