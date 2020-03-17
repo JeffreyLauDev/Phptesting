@@ -5,9 +5,14 @@
 ### Step 1: Database Migration
 Please follow the following command steps to migrate databse and import seed data :
 
+
+
 ```bash
 cd server
 composer install
+```  
+Please update .env Database connection detail
+```  
 php artisan migrate
 php artisan db:seed
 php artisan serve
